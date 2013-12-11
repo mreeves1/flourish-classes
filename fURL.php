@@ -62,6 +62,8 @@ class fURL
 		$port = (isset($_SERVER['SERVER_PORT'])) ? $_SERVER['SERVER_PORT'] : NULL;
 		if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
 			return 'https://' . $_SERVER['SERVER_NAME'] . ($port && $port != 443 ? ':' . $port : '');
+		} elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) == 'https') {
+			return 'https://' . $_SERVER['SERVER_NAME'] . ($port && $port != 443 && $port != 80 ? ':' . $port : '');			
 		} else {
 			return 'http://' . $_SERVER['SERVER_NAME'] . ($port && $port != 80 ? ':' . $port : '');
 		}
